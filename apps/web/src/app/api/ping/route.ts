@@ -1,0 +1,9 @@
+import { NextResponse } from 'next/server'
+ 
+export function GET() {
+  return NextResponse.json({ ok: true, timestamp: Date.now() })
+}
+
+export default function AboutPage() {
+  return({ok:true});
+}

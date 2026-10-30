@@ -3,9 +3,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: process.env.NEXT_PUBLIC_APP_NAME || "Vercel Academy Foundation - Web",
-  description: "VAF Web",
-};
+  title: {
+    template: '%s | Next.js Foundations',
+    default: 'Next.js Foundations',
+  },
+}
 
 export default function RootLayout({
   children,
