@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter", "@repo/web"],
+      "port": 3000
+    },
+    {
+      "name": "blog",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter", "@repo/blog"],
+      "port": 3001
+    }
+  ]
+}
