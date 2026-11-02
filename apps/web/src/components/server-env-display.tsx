@@ -5,5 +5,5 @@ export function ServerEnvDisplay() {
       <p>Public: {process.env.NEXT_PUBLIC_APP_NAME}</p>
       <p>Server-only: {process.env.INTERNAL_CONFIG}</p>
     </div>
-  )
+  );
 }

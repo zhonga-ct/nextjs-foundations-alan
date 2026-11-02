@@ -11,5 +11,5 @@ export default function HomePage() {
 }
 
 export const metadata: Metadata = {
-  title: 'About Us', // Becomes "About Us | Next.js Foundations"
-}
+  title: "About Us", // Becomes "About Us | Next.js Foundations"
+};

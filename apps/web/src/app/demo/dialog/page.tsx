@@ -14,6 +14,8 @@ import {
 
 // Simulated server data
 async function getTermsContent(): Promise<string> {
+  // Cached: new Date() is allowed in a "use cache" scope under Cache Components
+  "use cache";
   // This would fetch from a CMS or database in a real app
   return `By using this service, you agree to our terms. These terms were
   last updated on ${new Date().toLocaleDateString()}. Server-rendered content

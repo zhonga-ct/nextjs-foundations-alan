@@ -1,11 +1,11 @@
 export default async function DocsPage(props: {
-  params: Promise<{ slug: string[] }>
+  params: Promise<{ slug: string[] }>;
 }) {
-  const params = await props.params
-  
+  const params = await props.params;
+
   // params.slug is an array of path segments
-  const path = params.slug.join('/')
-  
+  const path = params.slug.join("/");
+
   return (
     <div className="p-8">
       <h1 className="mb-4 text-2xl font-bold">Documentation</h1>
@@ -19,5 +19,5 @@ export default async function DocsPage(props: {
         ))}
       </ul>
     </div>
-  )
+  );
 }

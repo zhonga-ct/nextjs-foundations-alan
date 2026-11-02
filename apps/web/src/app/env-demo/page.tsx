@@ -1,7 +1,7 @@
-import { ServerEnvDisplay } from '@/components/server-env-display'
-import { Collapsible } from '@/components/collapsible'
-import { ClientEnvDisplay } from '@/components/client-env-display'
- 
+import { ClientEnvDisplay } from '@/components/client-env-display';
+import { Collapsible } from '@/components/collapsible';
+import { ServerEnvDisplay } from '@/components/server-env-display';
+
 export default function EnvDemoPage() {
   return (
     <main className="flex flex-col gap-4 p-4">
@@ -11,5 +11,5 @@ export default function EnvDemoPage() {
       </Collapsible>
       <ClientEnvDisplay />
     </main>
-  )
+  );
 }

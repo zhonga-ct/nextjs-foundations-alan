@@ -3,10 +3,18 @@
 
 import Link from "next/link";
 import { connection } from "next/server";
+import { Suspense } from "react";
 import { NavigationButtons } from "./navigation-buttons";
 
-export default async function NavDemoPage() {
-  await connection(); // Opt out of prerendering - Date.now() needs request time
+// Only this subtree needs request time; the rest of the page prerenders
+async function RequestTimestamp() {
+  await connection(); // Date.now() needs request time
+  return (
+    <p className="text-gray-500 text-sm">Current timestamp: {Date.now()}</p>
+  );
+}
+
+export default function NavDemoPage() {
   return (
     <main className="mx-auto max-w-2xl p-8">
       <h1 className="mb-6 font-bold text-3xl">Navigation Demo</h1>
@@ -76,9 +84,13 @@ export default async function NavDemoPage() {
             during soft navigation.
           </p>
           <div className="rounded bg-gray-100 p-4">
-            <p className="text-gray-500 text-sm">
-              Current timestamp: {Date.now()}
-            </p>
+            <Suspense
+              fallback={
+                <p className="text-gray-500 text-sm">Current timestamp: …</p>
+              }
+            >
+              <RequestTimestamp />
+            </Suspense>
             <p className="text-gray-500 text-sm">
               (This updates on hard navigation but not soft navigation from
               child pages back)

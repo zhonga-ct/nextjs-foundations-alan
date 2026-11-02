@@ -1,14 +1,14 @@
-'use client'
- 
+"use client";
+
 export default function ErrorBoundary({
   error,
   retry,
 }: {
-  error: unknown
-  retry: () => void
+  error: unknown;
+  retry: () => void;
 }) {
-  const message = error instanceof Error ? error.message : String(error)
- 
+  const message = error instanceof Error ? error.message : String(error);
+
   return (
     <div className="rounded border border-red-200 bg-red-50 p-4">
       <h2 className="mb-2 font-semibold text-lg text-red-800">
@@ -23,5 +23,5 @@ export default function ErrorBoundary({
         Try again
       </button>
     </div>
-  )
+  );
 }

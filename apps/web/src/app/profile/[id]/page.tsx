@@ -25,7 +25,10 @@ async function fetchUserActivity(_id: string) {
 }
 
 // TODO: This fetches SEQUENTIALLY - learner optimizes with Promise.all
-async function ProfileContent({ id }: { id: string }) {
+async function ProfileContent({ params }: { params: Promise<{ id: string }> }) {
+  // params is request data, so it is awaited inside the Suspense boundary
+  const { id } = await params;
+
   // INTENTIONAL: Sequential fetching (Section 4 Lesson 2 fixes this)
   const profile = await fetchUserProfile(id);
   const stats = await fetchUserStats(id);
@@ -64,19 +67,17 @@ async function ProfileContent({ id }: { id: string }) {
   );
 }
 
-export default async function ProfilePage({
+export default function ProfilePage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-
   return (
     <main className="mx-auto max-w-2xl p-8">
       <Suspense
         fallback={<div className="animate-pulse">Loading profile...</div>}
       >
-        <ProfileContent id={id} />
+        <ProfileContent params={params} />
       </Suspense>
     </main>
   );

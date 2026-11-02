@@ -1,7 +1,11 @@
+import { connection } from "next/server";
+import { Suspense } from "react";
 import { fetchPosts, fetchStats, fetchUser } from "./data";
 
 // Parallel fetch with timing measurement
 async function fetchParallel() {
+  // Measure per request (Cache Components: timing needs request time)
+  await connection();
   const startTime = performance.now();
 
   // Promise.all runs all fetches simultaneously
@@ -18,15 +22,25 @@ async function fetchParallel() {
   return { user, posts, stats, duration };
 }
 
-export default async function DataDemoPage() {
-  const { user, posts, stats, duration } = await fetchParallel();
-
+export default function DataDemoPage() {
   return (
     <main className="mx-auto max-w-2xl p-8">
       <h1 className="mb-6 font-bold text-3xl">
         Data Fetching Without Waterfalls
       </h1>
 
+      <Suspense fallback={<p className="text-gray-500">Fetching data…</p>}>
+        <DataResults />
+      </Suspense>
+    </main>
+  );
+}
+
+async function DataResults() {
+  const { user, posts, stats, duration } = await fetchParallel();
+
+  return (
+    <>
       {/* Performance result banner */}
       <div className="mb-6 rounded-lg border-2 border-green-200 bg-green-50 p-4">
         <h2 className="font-semibold text-green-800">Performance Result</h2>
@@ -83,6 +97,6 @@ const [user, posts, stats] = await Promise.all([
 ]);`}
         </pre>
       </div>
-    </main>
+    </>
   );
 }

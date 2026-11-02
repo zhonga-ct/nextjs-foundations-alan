@@ -2,6 +2,7 @@
 // When navigating here from /dashboard/analytics, only this component re-renders
 // The sidebar layout persists (no flicker, state preserved)
 
+import { Suspense } from "react";
 import { fetchPosts, fetchStats, fetchUser } from "@/app/data-demo/data";
 
 // Promise.allSettled: partial data is acceptable, so one failed fetch
@@ -37,12 +38,23 @@ async function fetchDashboardData() {
   return { user, posts, stats };
 }
 
-export default async function DashboardPage() {
-  const { user, posts, stats } = await fetchDashboardData();
-
+export default function DashboardPage() {
   return (
     <div>
       <h1 className="mb-4 font-bold text-3xl">Dashboard Overview</h1>
+      {/* Uncached data streams in; the heading is part of the static shell */}
+      <Suspense fallback={<p className="text-gray-500">Loading dashboard…</p>}>
+        <DashboardContent />
+      </Suspense>
+    </div>
+  );
+}
+
+async function DashboardContent() {
+  const { user, posts, stats } = await fetchDashboardData();
+
+  return (
+    <>
       <p className="mb-6 text-gray-600">
         Welcome to your dashboard, {user.name}. Navigate between pages using the
         sidebar. Notice how the sidebar persists across route changes.
@@ -71,6 +83,6 @@ export default async function DashboardPage() {
           {stats.likes.toLocaleString()} likes
         </p>
       </div>
-    </div>
+    </>
   );
 }

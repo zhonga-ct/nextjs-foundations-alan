@@ -1,11 +1,11 @@
 "use client";
- 
+
 type UserDTO = {
   id: string;
   name: string;
   createdAt: string;
 };
- 
+
 export function UserCard({ user }: { user: UserDTO }) {
   return (
     <div className="rounded border bg-white p-4 shadow-sm">

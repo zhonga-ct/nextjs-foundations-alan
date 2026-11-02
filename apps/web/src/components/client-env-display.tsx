@@ -1,12 +1,12 @@
-'use client'
- 
-import { useState } from 'react'
- 
+'use client';
+
+import { useState } from 'react';
+
 export function ClientEnvDisplay() {
-  const [clicks, setClicks] = useState(0)
-  
-  const handleClick = () => setClicks(clicks + 1)
-  
+  const [clicks, setClicks] = useState(0);
+
+  const handleClick = () => setClicks(clicks + 1);
+
   return (
     <div className="rounded border p-4">
       <h3 className="font-bold">Client Component</h3>
@@ -20,5 +20,5 @@ export function ClientEnvDisplay() {
         Clicked {clicks} times
       </button>
     </div>
-  )
+  );
 }
