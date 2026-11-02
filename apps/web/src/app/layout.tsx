@@ -1,6 +1,7 @@
 // Root layout: wraps ALL pages, provides html/body structure
 // Keep this minimal: no section-specific chrome here
 
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
@@ -45,26 +46,9 @@ export default function RootLayout({
         {/* Field data from real visitors (active once deployed to Vercel) */}
         <Analytics />
         <SpeedInsights />
-        {/* TODO: Replace this hand-rolled integration in Section 4 Lesson 3. */}
-        {gaId ? (
-          <>
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-            />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${gaId}');
-                `,
-              }}
-            />
-          </>
-        ) : null}
       </body>
+      {/* Maintained integration: loads gtag after hydration (see THIRD_PARTY_SCRIPTS.md) */}
+      {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
     </html>
   );
 }
