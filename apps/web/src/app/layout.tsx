@@ -1,13 +1,16 @@
+// Root layout: wraps ALL pages, provides html/body structure
+// Keep this minimal: no section-specific chrome here
+
 import type { Metadata } from "next";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Next.js Foundations',
-    default: 'Next.js Foundations',
+    template: "%s | Next.js Foundations",
+    default: "Next.js Foundations",
   },
-}
+};
 
 export default function RootLayout({
   children,
@@ -18,7 +21,8 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="container mx-auto px-4 py-8">
+      <body className="min-h-screen">
+        {/* Global providers would go here (theme, auth, etc.) */}
         {children}
         {/* TODO: Replace this hand-rolled integration in Section 4 Lesson 3. */}
         {gaId ? (
