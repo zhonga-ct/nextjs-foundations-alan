@@ -2,25 +2,14 @@
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-// Simulated posts database
-const posts: Record<string, { title: string; content: string }> = {
-  "hello-world": {
-    title: "Hello World",
-    content: "This is the first post. Welcome to the blog!",
-  },
-  "nextjs-tips": {
-    title: "Next.js Tips",
-    content: "Here are some tips for building with Next.js...",
-  },
-};
+import { getPost } from "../data";
 
 // In Next.js 16, params is a Promise that must be awaited
 export default async function PostPage(props: {
   params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-  const post = posts[params.slug];
+  const post = getPost(params.slug);
 
   // If post doesn't exist, trigger 404
   // notFound() throws - don't wrap in try/catch or it won't work

@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { fetchPosts, fetchStats, fetchUser } from "@/app/data-demo/data";
 
 interface PageProps {
@@ -15,6 +16,19 @@ export default async function UserPage({ params }: PageProps) {
 
   // Now use id for any dependent fetches
   // (Better: restructure so all independent fetches are in Promise.all)
+
+  // Simulated lookup: only numeric ids exist in the mock data
+  const userExists = /^\d+$/.test(id);
+
+  // Redirect to login if user not found (auth scenario)
+  if (!userExists) {
+    redirect("/login");
+  }
+
+  // Alternative: show 404 for missing resources
+  // if (!userExists) {
+  //   notFound();
+  // }
 
   return (
     <main className="mx-auto max-w-2xl p-8">
