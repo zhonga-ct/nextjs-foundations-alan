@@ -1,4 +1,4 @@
-// TODO: Convert to next/image (Section 3 Lesson 4)
+import Image from "next/image";
 
 const images = [
   { src: "https://picsum.photos/800/600?random=1", alt: "Mountain landscape" },
@@ -12,27 +12,46 @@ export default function GalleryPage() {
     <main className="mx-auto max-w-4xl p-8">
       <h1 className="mb-8 font-bold text-3xl">Photo Gallery</h1>
 
+      {/* Preload the hero image because it is the page's LCP candidate */}
+      <div className="relative mb-8 aspect-video w-full">
+        <Image
+          alt="Featured landscape"
+          className="rounded-lg object-cover"
+          fill
+          preload
+          quality={85}
+          sizes="(max-width: 896px) 100vw, 896px"
+          src="https://picsum.photos/1200/600?random=hero"
+        />
+      </div>
+
+      {/* Gallery grid with responsive images */}
       <div className="grid grid-cols-2 gap-4">
         {images.map((image) => (
-          <div key={image.src} className="relative aspect-[4/3]">
-            {/* TODO: Replace with next/image for optimization */}
-            {/* biome-ignore lint/performance/noImgElement: intentional optimization exercise */}
-            <img
-              src={image.src}
+          <div className="relative aspect-[4/3]" key={image.src}>
+            {/* fill + aspect-ratio container reserves space (no CLS); lazy loads by default */}
+            <Image
               alt={image.alt}
-              className="h-full w-full rounded-lg object-cover"
+              className="rounded-lg object-cover"
+              fill
+              quality={80}
+              sizes="(max-width: 768px) 50vw, 400px"
+              src={image.src}
             />
           </div>
         ))}
       </div>
 
-      <section className="mt-8 rounded bg-gray-100 p-4">
-        <h2 className="mb-2 font-semibold">Performance Issues</h2>
-        <ul className="list-inside list-disc text-gray-600 text-sm">
-          <li>Images not optimized (no WebP/AVIF)</li>
-          <li>No lazy loading</li>
-          <li>No responsive sizing</li>
-          <li>Layout shift on load</li>
+      <section className="mt-8 rounded bg-green-100 p-4">
+        <h2 className="mb-2 font-semibold text-green-800">
+          Performance Optimizations Applied
+        </h2>
+        <ul className="list-inside list-disc text-green-700 text-sm">
+          <li>Images served as WebP/AVIF from /_next/image</li>
+          <li>Hero preloaded with the preload prop</li>
+          <li>Responsive sizes prevent over-fetching</li>
+          <li>Space reserved with fill + aspect ratio (no CLS)</li>
+          <li>Below-fold images lazy load automatically</li>
         </ul>
       </section>
     </main>
