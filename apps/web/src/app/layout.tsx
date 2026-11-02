@@ -1,6 +1,8 @@
 // Root layout: wraps ALL pages, provides html/body structure
 // Keep this minimal: no section-specific chrome here
 
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 
@@ -40,6 +42,9 @@ export default function RootLayout({
       <body className="min-h-screen font-sans">
         {/* Global providers would go here (theme, auth, etc.) */}
         {children}
+        {/* Field data from real visitors (active once deployed to Vercel) */}
+        <Analytics />
+        <SpeedInsights />
         {/* TODO: Replace this hand-rolled integration in Section 4 Lesson 3. */}
         {gaId ? (
           <>
